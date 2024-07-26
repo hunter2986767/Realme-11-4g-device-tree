@@ -15,18 +15,18 @@ function usage
 
 MANUFACTURER=$1
 DEVICE=$2
-VENDORBOOT=$3
+BOOTIMAGE=$3
 
 UNPACKBOOTIMG=$(which unpackbootimg)
 
 echo Arguments: $@
 
-if [ -z "$oplus" ]
+if [ -z "$MANUFACTURER" ]
 then
     usage
 fi
 
-if [ -z "$ossi" ]
+if [ -z "$DEVICE" ]
 then
     usage
 fi
@@ -41,17 +41,17 @@ pushd $TEMPLATE_DIR > /dev/null
 TEMPLATE_DIR=$(pwd)
 popd > /dev/null
 
-DEVICE_DIR=$ANDROID_TOP/device/$oplus/$ossi
+DEVICE_DIR=$ANDROID_TOP/device/$MANUFACTURER/$DEVICE
 
-if [ ! -z "$VENDORBOOT" ]
+if [ ! -z "$BOOTIMAGE" ]
 then
-    if [ -z "$UNPACKVENDORBOOT" ]
+    if [ -z "$UNPACKBOOTIMG" ]
     then
         echo unpackbootimg not found. Is your android build environment set up and have the host tools been built?
         exit 0
     fi
 
-    VENDORBOOTIMAGEFILE=$(basename $VENDORBOOT)
+    BOOTIMAGEFILE=$(basename $BOOTIMAGE)
 
     echo Output will be in $DEVICE_DIR
     mkdir -p $DEVICE_DIR
